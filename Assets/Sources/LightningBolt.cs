@@ -22,6 +22,7 @@ public class LightningBolt : MonoBehaviour
 	void Start()
 	{
 		oneOverZigs = 1f / (float)zigs;
+		var particleEmitter = GetComponent<ParticleEmitter>();
 		particleEmitter.emit = false;
 
 		particleEmitter.Emit(zigs);
@@ -49,7 +50,8 @@ public class LightningBolt : MonoBehaviour
 			particles[i].color = Color.white;
 			particles[i].energy = 1f;
 		}
-		
+
+		var particleEmitter = GetComponent<ParticleEmitter>();
 		particleEmitter.particles = particles;
 		
 		if (particleEmitter.particleCount >= 2)
