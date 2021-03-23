@@ -16,17 +16,17 @@ public class LightningBolt : MonoBehaviour
 	
 	Perlin noise;
 	float oneOverZigs;
-	
-	private Particle[] particles;
+
+	private ParticleSystem.Particle[] particles = new ParticleSystem.Particle[1000];
 	
 	void Start()
 	{
 		oneOverZigs = 1f / (float)zigs;
-		var particleEmitter = GetComponent<ParticleEmitter>();
-		particleEmitter.emit = false;
+		var particleEmitter = GetComponent<ParticleSystem>();
+		particleEmitter.Stop();
 
 		particleEmitter.Emit(zigs);
-		particles = particleEmitter.particles;
+		particleEmitter.GetParticles(this.particles);
 	}
 	
 	void Update ()
@@ -47,12 +47,12 @@ public class LightningBolt : MonoBehaviour
 			position += (offset * scale * ((float)i * oneOverZigs));
 			
 			particles[i].position = position;
-			particles[i].color = Color.white;
-			particles[i].energy = 1f;
+			particles[i].startColor = Color.white;
+			// particles[i].energy = 1f;
 		}
 
-		var particleEmitter = GetComponent<ParticleEmitter>();
-		particleEmitter.particles = particles;
+		var particleEmitter = GetComponent<ParticleSystem>();
+		particleEmitter.SetParticles(this.particles, this.particles.Length);
 		
 		if (particleEmitter.particleCount >= 2)
 		{
